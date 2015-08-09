@@ -1,9 +1,9 @@
 __author__ = 'Lada'
 
 
-mylist=[]
-
-mylist+=10*['a']
-mylist+=2*['b']
+mylist=['a','b','c','d','e','f']
 
 print mylist
+
+for i in reversed(mylist):
+    print i
