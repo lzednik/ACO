@@ -13,39 +13,32 @@ M.addArc({'arc4':{'spec':(3,4),'l':1,'t':1}})
 
 
 time=0
-antCount=6
+antCount=2
 antFinishCount=0
+# Colony=[Ant('Lada',1),
+#         Ant('Amber',1)]
 
 Colony=Colony('Colony1')
 
-Colony.addAnt('Lada',1)
-Colony.addAnt('Amber',1)
-Colony.addAnt('Lucy',1)
-Colony.addAnt('Baby Sam',1)
-Colony.addAnt('Natalie',1)
-Colony.addAnt('Zoey',1)
-
+Colony.addAnt(Ant('Lada',1))
+print Colony.roster
 
 while antFinishCount<antCount:
-    for ant in Colony.ants:
-        #print 'before '+ ant.id +'  ' +str(ant.itinerary) + '  '+str(ant.pos)
+    for ant in Colony:
         if ant.finished != True:
             if ant.pos != 4:
                 N=NbrSearch(M,ant.pos,ant.prec)
-                newArc=ArcSelectProb(M,N)
-                #print newArc
-                ant.addArc(M,newArc)
+                ant.addArc(M,ArcSelectProb(M,N))
             else:
                 ant.finished=True
                 antFinishCount+=1
                 M.updateT(ant.itinerary)
                 M.evaporate(0.05)
                 #print M.Arcs
-        print 'after '+ ant.id +'  ' +str(ant.itinerary) + '  '+str(ant.pos)
+                print ant.itinerary
     time+=1
-    print 'time '+str(time)
+    print time
 #print(ant1.showItinerary())
 #print M.Arcs['arc1']
 #print(NbrSearch(M,3,2))
 #print M.Arcs
-

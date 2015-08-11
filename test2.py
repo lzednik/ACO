@@ -1,9 +1,18 @@
 __author__ = 'Lada'
 
+class Colony:
+    def __init__(self,id,):
+        self.id=id
+        self.ants=[]
 
-mylist=['a','b','c','d','e','f']
+    def addAnt(self,id,pos):
+        self.ants.append(Ant(id,pos))
 
-print mylist
 
-for i in reversed(mylist):
-    print i
+class Ant:
+    def __init__(self,id,pos):
+        self.id=id
+        self.pos=pos
+        self.itinerary=[]
+    def addArc(self,arc):
+        self.itinerary.append(arc)

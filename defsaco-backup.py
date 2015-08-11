@@ -2,30 +2,27 @@ __author__ = 'Lada'
 import random
 
 class Colony:
-    def __init__(self,id,):
+    roster={}
+    def __init__(self,id):
         self.id=id
-        self.ants=[]
-
-    def addAnt(self,id,pos):
-        self.ants.append(Ant(id,pos))
 
 class Ant:
+    itinerary =[]
+    prec=0
     def __init__(self,id,pos):
         self.id=id
         self.pos=pos
         self.finished=False
-        self.itinerary =[]
-        self.prec=0
 
     def addArc(self,M,arc):
         self.itinerary.append(arc)
         self.pos=M.Arcs[arc]['spec'][1]
 
-    # def showItinerary(self):
-    #     itnr=''
-    #     for arc in self.itinerary:
-    #         itnr+=str(arc)+' '
-    #     return itnr
+    def showItinerary(self):
+        itnr=''
+        for arc in self.itinerary:
+            itnr+=str(arc)+' '
+        return itnr
 
 
 class Map:
