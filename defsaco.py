@@ -16,10 +16,26 @@ class Ant:
         self.finished=False
         self.itinerary =[]
         self.prec=0
+        self.gotime=0
 
-    def addArc(self,M,arc):
+    def addArc(self,M,arc,time):
         self.itinerary.append(arc)
         self.pos=M.Arcs[arc]['spec'][1]
+        self.gotime=time+M.Arcs[arc]['l']
+
+    def reset(self,pos):
+        self.pos=pos
+        self.finished=False
+        self.itinerary =[]
+        self.prec=0
+        self.gotime=0
+
+
+    # def totalTime(self,M):
+    #     ttime=0
+    #     for arc in self.itinerary:
+    #         ttime+=M.Arcs[arc]['spec']['l']
+    #     return ttime
 
     # def showItinerary(self):
     #     itnr=''
@@ -44,7 +60,6 @@ class Map:
     def evaporate(self,p):
         for arc in self.Arcs:
             self.Arcs[arc]['t']=((1-p)*self.Arcs[arc]['t'])
-
 
 
 def NbrSearch(map,node,pred):
