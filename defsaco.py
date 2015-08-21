@@ -54,8 +54,11 @@ class Map:
         self.Arcs.update(arc)
 
     def updateT(self,itinerary):
+        dist=0
         for arc in itinerary:
-            self.Arcs[arc]['t']+=1
+            dist+=self.Arcs[arc]['l']
+        for arc in itinerary:
+            self.Arcs[arc]['t']+=(20/dist)
 
     def evaporate(self,p):
         for arc in self.Arcs:
@@ -73,7 +76,6 @@ def ArcSelectProb(M,N):
     tsum=0
     for arc in N:
         tsum+=M.Arcs[arc]['t']
-
     plist=[]
     for arc in N:
         plist+=int(100*M.Arcs[arc]['t']/float(tsum))*[arc]

@@ -12,6 +12,7 @@ M.addArc({'arc3':{'spec':(2,3),'l':1,'t':1}})
 M.addArc({'arc4':{'spec':(3,4),'l':1,'t':1}})
 
 
+
 time=0
 antFinishTotal=600
 antFinishCount=0
@@ -34,15 +35,16 @@ while antFinishCount<antFinishTotal and time<100:
                 ant.addArc(M,newArc,time)
             else:
                 antFinishCount+=1
-                #ant.itinerary=remCycles(ant.itinerary,M)
+                ant.itinerary=remCycles(ant.itinerary,M)
+                print ant.itinerary
                 M.updateT(ant.itinerary)
                 M.evaporate(0.05)
-                #print ant.id + '  ' +str(ant.itinerary)
                 ant.reset(1,time)
-        print ant.id + '  ' +str(ant.itinerary)
-        print M.Arcs
+        #print ant.id + '  ' +str(ant.itinerary)
+        #print M.Arcs
 
     time+=1
-    print 'time '+str(time)
+    #print 'time '+str(time)
 
 print M.Arcs
+
