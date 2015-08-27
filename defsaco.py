@@ -58,7 +58,7 @@ class Map:
         for arc in itinerary:
             dist+=self.Arcs[arc]['l']
         for arc in itinerary:
-            self.Arcs[arc]['t']+=(20/dist)
+            self.Arcs[arc]['t']+=(10/dist)
 
     def evaporate(self,p):
         for arc in self.Arcs:
