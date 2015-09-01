@@ -62,22 +62,35 @@ def choiceinfo(dist,pheromones,alpha,beta):
     for i in xrange(size):
         for j in xrange(size):
             if i!=j:
-                ch[i][j]=alpha*math.log(pheromones[i][i])+beta*(math.log(dist[i][j]))
+                ch[i][j]=pow(pheromones[i][i],alpha)*pow(math.log(dist[i][j]),beta)
     return ch
 
 def tourLenNN(nnList):
     dist=0
-    tabu=[]
+    visited=[]
     cLoc=nnList[0][0]
-    tabu.append(cLoc)
-    while len(tabu)<50:
+    visited.append(cLoc)
+    while len(visited)<50:
         nextFound=False
         for loc in nnList[cLoc][1]:
-            if loc[0] not in tabu and nextFound==False:
-                tabu.append(loc[0])
+            if loc[0] not in visited and nextFound==False:
+                visited.append(loc[0])
                 dist+=loc[1]
                 cLoc=loc[0]
                 nextFound=True
 
     print 'NN-Search estimates initial tour length at '+ str(dist) + ' miles'
     return dist
+
+class Ant:
+    def __init__(self,id,pos):
+        self.id=id
+        self.tour_length=0
+        self.tour=[]
+        self.visited=1
+
+def initAnts(antCount,pos):
+    Colony=[]
+    for i in xrange(antCount):
+        Colony.append(Ant(i,pos))
+    return Colony
