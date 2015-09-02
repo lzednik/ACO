@@ -63,6 +63,12 @@ def choiceinfo(dist,pheromones,alpha,beta):
         for j in xrange(size):
             if i!=j:
                 ch[i][j]=pow(pheromones[i][i],alpha)*pow(math.log(dist[i][j]),beta)
+
+    #compute actuall probabilities
+    for i in  xrange(size):
+        s=sum(ch[i])
+        for j in  xrange(size):
+            ch[i][j]=ch[i][j]/s
     return ch
 
 def tourLenNN(nnList):
@@ -83,14 +89,15 @@ def tourLenNN(nnList):
     return dist
 
 class Ant:
-    def __init__(self,id,pos):
+    def __init__(self,id):
         self.id=id
+        self.pos=0
         self.tour_length=0
         self.tour=[]
-        self.visited=1
+        self.visited={}
 
-def initAnts(antCount,pos):
+def initAnts(antCount):
     Colony=[]
     for i in xrange(antCount):
-        Colony.append(Ant(i,pos))
+        Colony.append(Ant(i))
     return Colony

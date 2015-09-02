@@ -2,6 +2,8 @@ __author__ = 'Lada'
 
 #from init_data import readInstance,calculateDistances,geocode,computeNNlists,pheromone,choiceinfo,tourLenNN
 from init_data import *
+from construct_solutions import *
+
 #geocode
 #geocode('cities.txt','cities_geocoded.txt')
 alpha=1
@@ -18,3 +20,10 @@ choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
 
 Colony=initAnts(10)
 
+constructSolutions(Colony,nnList)
+
+#print Colony[2].visited[1]
+#print Colony[2].tour
+
+nc=ASDecisionRule(Colony[0],nnList,choiceInfo)
+print nc
