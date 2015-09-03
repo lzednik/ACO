@@ -64,11 +64,11 @@ def choiceinfo(dist,pheromones,alpha,beta):
             if i!=j:
                 ch[i][j]=pow(pheromones[i][i],alpha)*pow(math.log(dist[i][j]),beta)
 
-    #compute actuall probabilities
-    for i in  xrange(size):
-        s=sum(ch[i])
-        for j in  xrange(size):
-            ch[i][j]=ch[i][j]/s
+    #compute actual probabilities
+    # for i in  xrange(size):
+    #     s=sum(ch[i])
+    #     for j in  xrange(size):
+    #         ch[i][j]=ch[i][j]/s
     return ch
 
 def tourLenNN(nnList):
