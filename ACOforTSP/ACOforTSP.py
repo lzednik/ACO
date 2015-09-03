@@ -20,11 +20,18 @@ choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
 
 Colony=initAnts(10)
 
-constructSolutions(Colony,nnList,choiceInfo)
+constructSolutions(Colony,nnList,choiceInfo,dist)
 
 #print Colony[2].visited[1]
 #print Colony[2].tour
 
 # nc=ASDecisionRule(Colony[0],nnList,choiceInfo)
 # print nc
-print Colony[0].tour
+print Colony[0].tour_length
+print Colony[1].tour_length
+print Colony[2].tour_length
+print Colony[3].tour_length
+print Colony[4].tour_length
+print Colony[4].tour
+
+
