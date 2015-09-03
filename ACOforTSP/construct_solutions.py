@@ -1,7 +1,7 @@
 __author__ = 'Lada'
 import random
 
-def constructSolutions(Colony,nnList):
+def constructSolutions(Colony,nnList,choiceInfo):
     size=len(nnList)
     for ant in Colony:
         for i in xrange(size):
@@ -12,12 +12,13 @@ def constructSolutions(Colony,nnList):
     step=1
     while step < size:
         step+=1
-        #for k in xrange(size):
+        for ant in Colony:
+            ant.pos=ASDecisionRule(ant,nnList,choiceInfo)
+            ant.tour.append(ant.pos)
 
 
-#this needs to be redone so that the probabilities are not part of the choice info
-#the reason for this is that the probability of selecting a city that is already in list
-#must be zero
+
+
 def ASDecisionRule(ant,nnList,choiceInfo):
     s=sum(choiceInfo[ant.pos])
     selection_probs=[]
