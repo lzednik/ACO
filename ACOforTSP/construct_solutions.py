@@ -24,6 +24,7 @@ def constructSolutions(Colony,nnList,choiceInfo,dist):
         ant.tour_length+=dist[ant.pos][ant.tour[0]]
         ant.tour.append(ant.tour[0])
 
+
 def ASDecisionRule(ant,nnList,choiceInfo):
     s=sum(choiceInfo[ant.pos])
 
@@ -37,3 +38,25 @@ def ASDecisionRule(ant,nnList,choiceInfo):
             plist+=int(100000*selection_probs[city[0]])*[city[0]]
     return random.choice(plist)
 
+def evaporate(pheromones,p):
+    size=len(pheromones)
+    for x in xrange(size):
+        for y in xrange(size):
+            pheromones[x][y]=pheromones[x][y]*(1-p)
+    return pheromones
+
+def updatePheromones(pheromones,stats,phi):
+    print 'updating pheromones'
+    for x in xrange(len(stats.bestsofar['tour'])-1):
+        #print str(stats.bestsofar['tour'][x]) + ' ' +str(stats.bestsofar['tour'][x+1])
+        #pheromones[stats.bestsofar['tour'][x]][stats.bestsofar['tour'][x+1]]+=phi
+        #pheromones[stats.bestsofar['tour'][x+1]][stats.bestsofar['tour'][x]]+=phi
+
+        pheromones[stats.bestsofar['tour'][x]][stats.bestsofar['tour'][x+1]]*=1.05
+        pheromones[stats.bestsofar['tour'][x+1]][stats.bestsofar['tour'][x]]*=1.05
+
+    for tour in stats.topFive:
+        for x in xrange(len(tour)-1):
+            pheromones[tour[x]][tour[x+1]]*=1.04
+
+    return pheromones

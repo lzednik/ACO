@@ -3,7 +3,7 @@ __author__ = 'Lada'
 #from init_data import readInstance,calculateDistances,geocode,computeNNlists,pheromone,choiceinfo,tourLenNN
 from init_data import *
 from construct_solutions import *
-
+from stats import *
 #geocode
 #geocode('cities.txt','cities_geocoded.txt')
 alpha=1
@@ -15,23 +15,23 @@ nnList=computeNNlists(dist)
 
 
 itlen=tourLenNN(nnList)
-pheromones=pheromone(len(cities),itlen)
+phi=1/math.log(itlen)
+
+pheromones=pheromone(len(cities),phi)
 choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
 
 Colony=initAnts(10)
+runStats=antStats()
 
-constructSolutions(Colony,nnList,choiceInfo,dist)
+run=0
+while run <100:
+    constructSolutions(Colony,nnList,choiceInfo,dist)
+    runStats=updateStats(Colony,runStats)
+    print runStats.bestsofar
+    pheromones=evaporate(pheromones,0.1)
+    pheromones=updatePheromones(pheromones,runStats,phi)
+    choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
+    resetAnts(Colony)
+    run+=1
 
-#print Colony[2].visited[1]
-#print Colony[2].tour
-
-# nc=ASDecisionRule(Colony[0],nnList,choiceInfo)
-# print nc
-print Colony[0].tour_length
-print Colony[1].tour_length
-print Colony[2].tour_length
-print Colony[3].tour_length
-print Colony[4].tour_length
-print Colony[4].tour
-
-
+#stats=updateStats(Colony,stats)

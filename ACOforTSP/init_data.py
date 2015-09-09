@@ -51,8 +51,8 @@ def computeNNlists(dist):
         nnList.append((i,listToSort))
     return nnList
 
-def pheromone(size,itlen):
-    phi=1/math.log(itlen)
+def pheromone(size,phi):
+    #phi=1/math.log(itlen)
     ph = [[phi for i in xrange(size)] for i in xrange(size)]
     return ph
 
@@ -101,3 +101,24 @@ def initAnts(antCount):
     for i in xrange(antCount):
         Colony.append(Ant(i))
     return Colony
+
+def resetAnts(Colony):
+    for ant in Colony:
+        ant.id=0
+        ant.pos=0
+        ant.tour_length=0
+        ant.tour=[]
+        ant.visited={}
+
+class antStats:
+    def __init__(self):
+        self.bestsofar={'tourLength':1000000}
+        self.topFive=[]
+
+    def bestsofar(self):
+        return self.bestsofar
+
+    def topFive(self):
+        return self.topFive
+
+
