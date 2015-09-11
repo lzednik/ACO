@@ -62,7 +62,8 @@ def choiceinfo(dist,pheromones,alpha,beta):
     for i in xrange(size):
         for j in xrange(size):
             if i!=j:
-                ch[i][j]=pow(pheromones[i][i],alpha)*pow(math.log(dist[i][j]),beta)
+                #ch[i][j]=alpha*pheromones[i][i]+beta*math.log(dist[i][j])
+                ch[i][j]=alpha*pheromones[i][i]+beta*(1/math.log(dist[i][j],10))
 
     #compute actual probabilities
     # for i in  xrange(size):

@@ -31,7 +31,6 @@ def ASDecisionRule(ant,nnList,choiceInfo):
     selection_probs=[]
     for ch in choiceInfo[ant.pos]:
         selection_probs.append(ch/s)
-
     plist=[]
     for city in nnList[ant.pos][1]:
         if city[0] not in ant.tour:
@@ -46,7 +45,6 @@ def evaporate(pheromones,p):
     return pheromones
 
 def updatePheromones(pheromones,stats,phi):
-    print 'updating pheromones'
     for x in xrange(len(stats.bestsofar['tour'])-1):
         #print str(stats.bestsofar['tour'][x]) + ' ' +str(stats.bestsofar['tour'][x+1])
         #pheromones[stats.bestsofar['tour'][x]][stats.bestsofar['tour'][x+1]]+=phi
