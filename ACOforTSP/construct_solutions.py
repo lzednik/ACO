@@ -27,10 +27,11 @@ def constructSolutions(Colony,nnList,choiceInfo,dist):
 
 def ASDecisionRule(ant,nnList,choiceInfo):
     s=sum(choiceInfo[ant.pos])
-
     selection_probs=[]
+
     for ch in choiceInfo[ant.pos]:
         selection_probs.append(ch/s)
+
     plist=[]
     for city in nnList[ant.pos][1]:
         if city[0] not in ant.tour:
@@ -55,6 +56,6 @@ def updatePheromones(pheromones,stats,phi):
 
     for tour in stats.topFive:
         for x in xrange(len(tour)-1):
-            pheromones[tour[x]][tour[x+1]]*=1.04
+            pheromones[tour[x]][tour[x+1]]*=1.1
 
     return pheromones

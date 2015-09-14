@@ -7,20 +7,24 @@ from stats import *
 #geocode
 #geocode('cities.txt','cities_geocoded.txt')
 alpha=1
-beta=20
+beta=2
 
 cities=readInstance('cities_geocoded.txt')
 dist=calculateDistances(cities)
-nnList=computeNNlists(dist)
+distnorm=calculateDistancesNorm(cities)
+nnList=computeNNlists(distnorm)
 
 
-itlen=tourLenNN(nnList)
-phi=1/math.log(itlen)
+
+nnListfoNN=computeNNlists(dist)
+itlen=tourLenNN(nnListfoNN)
+
+phi=1
 
 pheromones=pheromone(len(cities),phi)
-choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
+choiceInfo=choiceinfo(distnorm,pheromones,alpha,beta)
 
-Colony=initAnts(10)
+Colony=initAnts(100)
 runStats=antStats()
 
 run=0
@@ -28,9 +32,9 @@ while run <10:
     constructSolutions(Colony,nnList,choiceInfo,dist)
     runStats=updateStats(Colony,runStats)
     print runStats.bestsofar
-    #pheromones=evaporate(pheromones,0.1)
+    pheromones=evaporate(pheromones,0.1)
     pheromones=updatePheromones(pheromones,runStats,phi)
-    choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
+    choiceInfo=choiceinfo(distnorm,pheromones,alpha,beta)
     resetAnts(Colony)
     run+=1
 
@@ -43,6 +47,6 @@ print cities[runStats.bestsofar['tour'][3]]
 print cities[runStats.bestsofar['tour'][4]]
 print cities[runStats.bestsofar['tour'][5]]
 print''
-print choiceInfo[0]
-print dist[0]
+# print choiceInfo[0]
+# print dist[0]
 

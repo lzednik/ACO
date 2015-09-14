@@ -35,9 +35,17 @@ def readInstance(fileName):
 
 def calculateDistances(cities):
     dist = [[int(vincenty((cities[i]['lat'],cities[i]['lon']),(cities[j]['lat'],cities[j]['lon'])).miles) for i in xrange(len(cities))] for j in xrange(len(cities))]
+    return dist
 
-    #print vincenty((cities[i]['lat'],cities[i]['lon']),(cities[j]['lat'],cities[j]['lon'])).miles
+def calculateDistancesNorm(cities):
+    dist = [[int(vincenty((cities[i]['lat'],cities[i]['lon']),(cities[j]['lat'],cities[j]['lon'])).miles) for i in xrange(len(cities))] for j in xrange(len(cities))]
 
+    size=len(dist)
+
+    for x in xrange(size):
+        s=sum(dist[x])
+        for y in xrange(size):
+            dist[x][y]=float(dist[x][y])/s
     return dist
 
 def computeNNlists(dist):
@@ -62,8 +70,12 @@ def choiceinfo(dist,pheromones,alpha,beta):
     for i in xrange(size):
         for j in xrange(size):
             if i!=j:
-                #ch[i][j]=alpha*pheromones[i][i]+beta*math.log(dist[i][j])
-                ch[i][j]=alpha*pheromones[i][i]+beta*(1/math.log(dist[i][j],10))
+                if dist[i][j]==0:
+                    ch[i][j]=0
+                else:
+                    #ch[i][j]=alpha*pheromones[i][i]+beta*math.log(dist[i][j])
+                    #ch[i][j]=alpha*pheromones[i][i]+beta*(1/math.log(dist[i][j],10))
+                    ch[i][j]=pow(pheromones[i][i],alpha)*pow((1/float(dist[i][j])),beta)
 
     #compute actual probabilities
     # for i in  xrange(size):
