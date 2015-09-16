@@ -1,4 +1,10 @@
 __author__ = 'Lada'
 
-import math
-print math.log(8000)
+plist=[]
+
+city=5
+t=4
+for x in xrange(3):
+    plist+=int(t)*[x]
+
+print plist

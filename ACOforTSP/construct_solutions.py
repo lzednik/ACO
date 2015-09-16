@@ -25,18 +25,42 @@ def constructSolutions(Colony,nnList,choiceInfo,dist):
         ant.tour.append(ant.tour[0])
 
 
+# def ASDecisionRule(ant,nnList,choiceInfo):
+#     s=sum(choiceInfo[ant.pos])
+#     selection_probs=[]
+#
+#     for ch in choiceInfo[ant.pos]:
+#         selection_probs.append(ch/s)
+#
+#     plist=[]
+#     cutoff=0
+#     for city in nnList[ant.pos][1]:
+#         if city[0] not in ant.tour and cutoff<5:
+#             #plist+=int(100000*selection_probs[city[0]])*[city[0]]
+#             plist+=int(choiceInfo[ant.pos][city[0]])*[city[0]]
+#             cutoff+=1
+#     return random.choice(plist)
+
 def ASDecisionRule(ant,nnList,choiceInfo):
-    s=sum(choiceInfo[ant.pos])
+    s=0
     selection_probs=[]
-
-    for ch in choiceInfo[ant.pos]:
-        selection_probs.append(ch/s)
-
     plist=[]
-    for city in nnList[ant.pos][1]:
-        if city[0] not in ant.tour:
-            plist+=int(100000*selection_probs[city[0]])*[city[0]]
+
+    limit=0
+    cutoff=10
+
+    for city in  nnList[ant.pos][1]:
+        if city[0] not in ant.tour and limit<cutoff:
+            s+=choiceInfo[ant.pos][city[0]]
+            limit+=1
+
+    limit=0
+    for city in  nnList[ant.pos][1]:
+        if city[0] not in ant.tour and limit<cutoff:
+            plist+=int(cutoff*choiceInfo[ant.pos][city[0]]/s)*[city[0]]
+            limit+=1
     return random.choice(plist)
+
 
 def evaporate(pheromones,p):
     size=len(pheromones)

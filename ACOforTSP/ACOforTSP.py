@@ -7,7 +7,7 @@ from stats import *
 #geocode
 #geocode('cities.txt','cities_geocoded.txt')
 alpha=1
-beta=2
+beta=3
 
 cities=readInstance('cities_geocoded.txt')
 dist=calculateDistances(cities)
@@ -28,7 +28,7 @@ Colony=initAnts(100)
 runStats=antStats()
 
 run=0
-while run <10:
+while run <20:
     constructSolutions(Colony,nnList,choiceInfo,dist)
     runStats=updateStats(Colony,runStats)
     print runStats.bestsofar
@@ -40,13 +40,8 @@ while run <10:
 
 #stats=updateStats(Colony,stats)
 print ''
-print cities[runStats.bestsofar['tour'][0]]
-print cities[runStats.bestsofar['tour'][1]]
-print cities[runStats.bestsofar['tour'][2]]
-print cities[runStats.bestsofar['tour'][3]]
-print cities[runStats.bestsofar['tour'][4]]
-print cities[runStats.bestsofar['tour'][5]]
+# for x in xrange(51):
+#     print cities[runStats.bestsofar['tour'][x]]
+
 print''
-# print choiceInfo[0]
-# print dist[0]
 
