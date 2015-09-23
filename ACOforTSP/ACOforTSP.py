@@ -12,29 +12,30 @@ beta=3
 cities=readInstance('cities_geocoded.txt')
 dist=calculateDistances(cities)
 distnorm=calculateDistancesNorm(cities)
-nnList=computeNNlists(distnorm)
+nnList=computeNNlists(dist)
 
 
 
 nnListfoNN=computeNNlists(dist)
 itlen=tourLenNN(nnListfoNN)
 
-phi=1
+nodecount=len(cities)
 
-pheromones=pheromone(len(cities),phi)
-choiceInfo=choiceinfo(distnorm,pheromones,alpha,beta)
+pheromones=pheromone(len(cities),itlen,nodecount)
+choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
 
-Colony=initAnts(100)
+antcount=100
+Colony=initAnts(antcount)
 runStats=antStats()
 
 run=0
-while run <20:
+while run <10:
     constructSolutions(Colony,nnList,choiceInfo,dist)
-    runStats=updateStats(Colony,runStats)
-    print runStats.bestsofar
+    runStats=updateStats(Colony,runStats,antcount)
+    print 'run ' +str(run)+'  ' +str(runStats.bestsofar)
     pheromones=evaporate(pheromones,0.1)
-    pheromones=updatePheromones(pheromones,runStats,phi)
-    choiceInfo=choiceinfo(distnorm,pheromones,alpha,beta)
+    pheromones=updatePheromones(pheromones,runStats,itlen)
+    choiceInfo=choiceinfo(dist,pheromones,alpha,beta)
     resetAnts(Colony)
     run+=1
 

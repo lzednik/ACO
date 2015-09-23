@@ -1,6 +1,6 @@
 __author__ = 'Lada'
 
-def updateStats(Colony,stats):
+def updateStats(Colony,stats,antcount):
     toursList=[]
     for ant in Colony:
         toursList.append((ant.id,ant.tour_length))
@@ -10,6 +10,6 @@ def updateStats(Colony,stats):
         stats.bestsofar['tour']=Colony[toursList[0][0]].tour
 
     stats.topFive=[]
-    for x in xrange(5):
+    for x in xrange(int(0.05*antcount)):
         stats.topFive.append(Colony[toursList[x][0]].tour)
     return stats

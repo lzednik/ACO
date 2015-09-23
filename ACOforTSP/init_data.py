@@ -59,8 +59,8 @@ def computeNNlists(dist):
         nnList.append((i,listToSort))
     return nnList
 
-def pheromone(size,phi):
-    #phi=1/math.log(itlen)
+def pheromone(size,itlen,nodecount):
+    phi=float(1)/(nodecount*(itlen))
     ph = [[phi for i in xrange(size)] for i in xrange(size)]
     return ph
 

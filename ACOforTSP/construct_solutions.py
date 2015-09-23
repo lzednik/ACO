@@ -53,7 +53,6 @@ def ASDecisionRule(ant,nnList,choiceInfo):
         if city[0] not in ant.tour and limit<cutoff:
             s+=choiceInfo[ant.pos][city[0]]
             limit+=1
-
     limit=0
     for city in  nnList[ant.pos][1]:
         if city[0] not in ant.tour and limit<cutoff:
