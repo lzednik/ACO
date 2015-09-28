@@ -1,8 +1,13 @@
 __author__ = 'Lada'
 
+import time
 import numpy as np
 
-Z=np.arange(25).reshape(5,5)
-print Z
-print 'space'
-print Z[2,:2]
+
+start = time.time()
+print "hello"
+
+
+data=np.loadtxt('solomon_r101.txt', skiprows=1)
+end = time.time()
+print end - start
