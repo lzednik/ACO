@@ -17,3 +17,4 @@ for i in xrange(data.shape[0]):
 for d in dist:
     print d
 
+
