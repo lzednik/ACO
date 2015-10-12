@@ -11,6 +11,7 @@ class Truck:
         self.tour=[]
         self.time=0
         self.load=0
+        self.tourlength=0
 
 data=np.loadtxt('solomon_r101.txt', skiprows=1)
 
@@ -47,7 +48,7 @@ while len(visitedList) < data.shape[0]:
                 visitedList.append(candpos)
                 truckList[truckCount].time+=(dist[truckList[truckCount].pos][candpos]+data[candpos][6])
                 truckList[truckCount].load+=data[candpos][3]
-
+                truckList[truckCount].tourlength+=(dist[truckList[truckCount].pos][candpos]+data[candpos][6])
                 nxtFound=True
 
             nxt+=1
@@ -55,6 +56,7 @@ while len(visitedList) < data.shape[0]:
             truckList[truckCount].pos=0
             truckList[truckCount].tour.append(0)
             truckList[truckCount].time+=(dist[truckList[truckCount].pos][0])
+            truckList[truckCount].tourlength+=(dist[truckList[truckCount].pos][0])
             truckList[truckCount].load=0
 
 
@@ -63,6 +65,15 @@ while len(visitedList) < data.shape[0]:
         print 'truck count: ' +str(truckCount-1)
         print 'truck load: ' +str(truckList[truckCount-1].load)
         print 'truck itinerary: ' +str(truckList[truckCount-1].tour)
+        print 'truck tour length: ' +str(truckList[truckCount-1].tourlength)
+        print ''
 
 
 print visitedList
+
+totaldist=0
+for truck in truckList:
+    totaldist+=truck.tourlength
+
+
+print 'Total distance is: ' +str(totaldist)

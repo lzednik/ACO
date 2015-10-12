@@ -1,13 +1,13 @@
 __author__ = 'Lada'
+# flavor_list=['vanilla','chocolate','pecan','strawberry']
+#
+# for i, flavor in enumerate(flavor_list):
+#     print('%d: %s' %(i+1,flavor))
+#
 
-import time
-import numpy as np
-
-
-start = time.time()
-print "hello"
-
-
-data=np.loadtxt('solomon_r101.txt', skiprows=1)
-end = time.time()
-print end - start
+a=1
+b=0
+try:
+    print(a/b)
+except ZeroDivisionError:
+    print('Error')
