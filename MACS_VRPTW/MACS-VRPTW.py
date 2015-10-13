@@ -21,7 +21,7 @@ alpha=1
 beta=2
 pheromones=pheromone(dataM.shape[0],nnlen)
 #print pickNext(1,distM)
-ant=Ant(16,3)
+ant=Ant(1,10)
 
 prog=0
 while prog<100:
@@ -30,11 +30,14 @@ while prog<100:
 
 print('final routes are')
 ant.print_routes()
+
+ant.print_tourlength(distM)
+
 #
 # for ch in choiceInfo:
 #     print(ch)
-
-for ph in pheromones:
-    for ph1 in ph:
-        if ph1 !=9.900990099009901e-06:
-            print(ph1)
+#
+# for ph in pheromones:
+#     for ph1 in ph:
+#         if ph1 !=9.900990099009901e-06:
+#             print(ph1)

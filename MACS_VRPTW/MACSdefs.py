@@ -13,6 +13,9 @@ class Ant:
         for v in range(vcount):
             self.vehicles.append(Vehicle(v))
 
+        for veh in self.vehicles:
+            veh.pos=0
+
     #each Ant needs to be able to calculate routes for each vehicle
     def calculate(self,distM,dataM,pheromones):
         #initially each vehicle is assigned a node
@@ -59,6 +62,13 @@ class Ant:
             print ('Vehicle ' + str(veh.id))
             print('Route '+ str(veh.tour))
             print('')
+
+    def print_tourlength(self,dist):
+        tour_length=0
+        for veh in self.vehicles:
+            for i in range(len(veh.tour)-1):
+                tour_length+=dist[veh.tour[i]][veh.tour[i+1]]
+        print(tour_length)
 
 class Vehicle:
     def __init__(self,id):
