@@ -11,33 +11,23 @@ dataM=np.loadtxt('solomon_r101.txt', skiprows=1)
 distM=np.zeros((dataM.shape[0],dataM.shape[0]),dtype=np.int8)
 for i in range(dataM.shape[0]):
     for j in range(dataM.shape[0]):
-            distM[i][j]=math.ceil(float(np.linalg.norm(dataM[i][1:3]-dataM[j][1:3])))
+        distM[i][j]=math.ceil(float(np.linalg.norm(dataM[i][1:3]-dataM[j][1:3])))
 
-distInv=np.where(distM != 0, 1/distM, 0)
-#distInv=np.divide(1,distM)
 
 nnSolution=nnAlgorithm(dataM,distM)
 bestSolution=nnSolution
-print('Results of NN Algorithm')
 bestSolution.print()
 
 beta=2
-pheromones=pheromone(distM.shape,nnSolution.tour_length)
+pheromones=pheromone(dataM.shape[0],nnSolution.tour_length)
 
+ant=Ant(1,10,bestSolution)
 
-choiceInfo=choiceInfo(pheromones,distInv,beta)
+prog=0
+while prog<10:
+    ant.calculate(distM,dataM,pheromones,bestSolution)
+    prog+=1
 
-
-
-ant=Ant(1,bestSolution)
-
-print(ExploreExploitDecision(0.5))
-#
-# prog=0
-# while prog<10:
-#     ant.calculate(distM,dataM,pheromones,bestSolution)
-#     prog+=1
-#
 #def pickNext(pos,distM,dataM,pheromones,visited,time):
 
 
