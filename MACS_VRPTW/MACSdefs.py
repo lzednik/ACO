@@ -181,3 +181,16 @@ def ExploreExploitDecision(p):
     ar.append(int(10*(round(1-p,2)))*['Exploit'])
     ar2 = [y for x in ar for y in x]
     return(random.choice(ar2))
+
+#procedure to pick the next node
+def Exploration(pos,distM,dataM,choiceInfo,IN,visited,time):
+    delivery_time=np.zeros(dataM.shape[0])
+    delivery_time=np.maximum(distM[pos]+time,dataM[:,4])
+    delta_time=delivery_time-time
+    dist=np.multiply(delta_time,dataM[:,5]-time)
+    distance=np.subtract(dist,IN)
+    distance=np.maximum(np.ones(dataM.shape[0]),distance)
+    eta=1/distance
+
+    return eta
+

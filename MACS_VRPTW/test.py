@@ -1,14 +1,8 @@
-import random
+import numpy as np
 
-#Prob of explore
-p=0.8
-
-ar=[]
-ar.append(int(10*round(p,2))*['Explore'])
-ar.append(int(10*(round(1-p,2)))*['Exploit'])
-ar2 = [y for x in ar for y in x]
-r=random.choice(ar2)
-
-print(r)
-
-
+x1=np.arange(3)
+x2=np.arange(1,4)
+print(x1)
+print(x2)
+x3=np.multiply(x1,x2)
+print(x3)

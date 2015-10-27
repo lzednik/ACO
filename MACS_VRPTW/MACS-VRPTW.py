@@ -16,6 +16,8 @@ for i in range(dataM.shape[0]):
 distInv=np.where(distM != 0, 1/distM, 0)
 #distInv=np.divide(1,distM)
 
+IN=np.zeros(dataM.shape[0])
+
 nnSolution=nnAlgorithm(dataM,distM)
 bestSolution=nnSolution
 print('Results of NN Algorithm')
@@ -31,7 +33,10 @@ choiceInfo=choiceInfo(pheromones,distInv,beta)
 
 ant=Ant(1,bestSolution)
 
-print(ExploreExploitDecision(0.5))
+visited=[]
+time=0
+#print(dataM[:,0])
+print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))
 #
 # prog=0
 # while prog<10:
