@@ -27,7 +27,7 @@ beta=2
 pheromones=pheromone(distM.shape,nnSolution.tour_length)
 
 
-choiceInfo=choiceInfo(pheromones,distInv,beta)
+#choiceInfo=choiceInfo(pheromones,distInv,beta)
 
 
 
@@ -36,7 +36,8 @@ ant=Ant(1,bestSolution)
 visited=[]
 time=0
 #print(dataM[:,0])
-print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))
+#print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))
+Exploration(1,distM,dataM,pheromones,IN,visited,time,beta)
 #
 # prog=0
 # while prog<10:

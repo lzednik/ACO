@@ -151,9 +151,9 @@ def pheromone(size,nnlen):
     ph.fill(phi)
     return ph
 
-def choiceInfo(pheromones,distInv,beta):
-    ch=[a*pow(b,beta) for a,b in zip(pheromones,distInv)]
-    return ch
+# def choiceInfo(pheromones,distInv,beta):
+#     ch=[a*pow(b,beta) for a,b in zip(pheromones,distInv)]
+#     return ch
 
 def update_pheromone(vehicles,pheromones):
     for veh in vehicles:
@@ -183,7 +183,7 @@ def ExploreExploitDecision(p):
     return(random.choice(ar2))
 
 #procedure to pick the next node
-def Exploration(pos,distM,dataM,choiceInfo,IN,visited,time):
+def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
     delivery_time=np.zeros(dataM.shape[0])
     delivery_time=np.maximum(distM[pos]+time,dataM[:,4])
     delta_time=delivery_time-time
@@ -192,5 +192,19 @@ def Exploration(pos,distM,dataM,choiceInfo,IN,visited,time):
     distance=np.maximum(np.ones(dataM.shape[0]),distance)
     eta=1/distance
 
+    etaPow=np.power(eta,beta)
+    tosum=np.multiply(pheromones[pos],etaPow)
+    thesum=np.sum(tosum)
+    probs=np.divide(tosum,thesum)
+    probmin=1/np.min(probs)
+    probs2=np.round(np.multiply(probs,probmin),0).astype(int)
+    print(probs2)
+
+
+    #tosum=np.multiply(choiceInfo([pos],etaPow))
+
+    # for pos in range(dataM.shape[0]):
+    #     if pos not in visited:
+    #
     return eta
 
