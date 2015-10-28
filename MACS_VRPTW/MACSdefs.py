@@ -198,13 +198,10 @@ def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
     probs=np.divide(tosum,thesum)
     probmin=1/np.min(probs)
     probs2=np.round(np.multiply(probs,probmin),0).astype(int)
-    print(probs2)
 
-
-    #tosum=np.multiply(choiceInfo([pos],etaPow))
-
-    # for pos in range(dataM.shape[0]):
-    #     if pos not in visited:
-    #
-    return eta
+    probs3=[]
+    for pos in range(probs2.shape[0]):
+        if pos not in visited:
+            probs3+=(probs2[pos]*[pos])
+    return random.choice(probs3)
 

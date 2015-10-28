@@ -37,7 +37,7 @@ visited=[]
 time=0
 #print(dataM[:,0])
 #print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))
-Exploration(1,distM,dataM,pheromones,IN,visited,time,beta)
+print(Exploration(1,distM,dataM,pheromones,IN,visited,time,beta))
 #
 # prog=0
 # while prog<10:

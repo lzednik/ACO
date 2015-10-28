@@ -1,8 +1,8 @@
 import numpy as np
 
-x1=np.arange(3)
-x2=np.arange(1,4)
-print(x1)
-print(x2)
-x3=np.multiply(x1,x2)
-print(x3)
+a=np.arange(5,10)
+b=np.arange(1)
+
+c=a[b]
+
+print(c)
