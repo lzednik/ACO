@@ -13,9 +13,6 @@ for i in range(dataM.shape[0]):
     for j in range(dataM.shape[0]):
             distM[i][j]=math.ceil(float(np.linalg.norm(dataM[i][1:3]-dataM[j][1:3])))
 
-distInv=np.where(distM != 0, 1/distM, 0)
-#distInv=np.divide(1,distM)
-
 IN=np.zeros(dataM.shape[0])
 
 nnSolution=nnAlgorithm(dataM,distM)
@@ -35,9 +32,20 @@ ant=Ant(1,bestSolution)
 
 visited=[]
 time=0
+#ant.calculate(distM,dataM,pheromones,bestSolution,IN,beta)
+
+print(Exploration(0,distM,dataM,pheromones,IN,visited,time,beta))
+
 #print(dataM[:,0])
 #print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))
-print(Exploration(1,distM,dataM,pheromones,IN,visited,time,beta))
+#Exploration(1,distM,dataM,pheromones,IN,visited,time,beta)
+
+
+#print(distM[1])
+#np.savetxt('t2.txt', distM[1], delimiter=',')
+
+
+
 #
 # prog=0
 # while prog<10:

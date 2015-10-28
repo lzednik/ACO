@@ -43,7 +43,7 @@ class Ant:
 
 
     #each Ant needs to be able to calculate routes for each vehicle
-    def calculate(self,distM,dataM,pheromones,bestSolution):
+    def calculate(self,distM,dataM,pheromones,bestSolution,IN,beta):
         #reset
         for veh in self.vehicles:
             veh.pos=0
@@ -55,13 +55,26 @@ class Ant:
 
         #perform calculation
         calcDone=False
+        minTime=1000000
         while calcDone==False:
             for veh in self.vehicles:
-                if ExploreExploitDecision(0.2) =='Exploration':  #pass probability of exploration
-                    print('Exploration')
-                else:
-                    print('Exploitation')
+                if veh.doneTime<=self.time:
+                    if ExploreExploitDecision(0.9) =='Explore':  #pass probability of exploration
+                        print('Exploration')
+                        nextPos=Exploration(veh.pos,distM,dataM,pheromones,IN,self.solution.visited,self.time,beta)
 
+                        #update vehicle
+                        veh.doneTime=max(self.time+distM[veh.pos][nextPos]+dataM[nextPos][6],dataM[nextPos][6])
+                        if minTime>veh.doneTime:
+                            minTime=veh.doneTime
+                        veh.pos=nextPos
+                        veh.tour.append(nextPos)
+                        self.solution.visited.append(nextPos)
+                        self.solution.tour_length+=1
+                    #else:
+                    #    print('Exploitation')
+            if self.solution.tour_length>5:
+                calcDone=True
         # #initially each vehicle is assigned a node
         # for veh in self.vehicles:
         #     nextNode=pickNext(veh.pos,distM,dataM,pheromones,self.visited,self.time)
@@ -184,21 +197,26 @@ def ExploreExploitDecision(p):
 
 #procedure to pick the next node
 def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
-    delivery_time=np.zeros(dataM.shape[0])
     delivery_time=np.maximum(distM[pos]+time,dataM[:,4])
     delta_time=delivery_time-time
     dist=np.multiply(delta_time,dataM[:,5]-time)
     distance=np.subtract(dist,IN)
-    distance=np.maximum(np.ones(dataM.shape[0]),distance)
-    eta=1/distance
+    distance=np.maximum(np.zeros(dataM.shape[0])+0.01,distance)
 
+    print('xxxxxxxxxxx')
+    print(distance)
+    print('xxxxxxxxxxx')
+    eta=1/distance
     etaPow=np.power(eta,beta)
     tosum=np.multiply(pheromones[pos],etaPow)
     thesum=np.sum(tosum)
     probs=np.divide(tosum,thesum)
+
     probmin=1/np.min(probs)
     probs2=np.round(np.multiply(probs,probmin),0).astype(int)
-
+    print('selection probabilities:')
+    print(probs2)
+    np.savetxt('t1.txt', probs2, delimiter=',')
     probs3=[]
     for pos in range(probs2.shape[0]):
         if pos not in visited:
