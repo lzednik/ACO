@@ -33,8 +33,8 @@ ant=Ant(1,bestSolution)
 visited=[]
 time=0
 #ant.calculate(distM,dataM,pheromones,bestSolution,IN,beta)
-
-print(Exploration(0,distM,dataM,pheromones,IN,visited,time,beta))
+visited.append(0)
+print(Exploration(3,distM,dataM,pheromones,IN,visited,time,beta))
 
 #print(dataM[:,0])
 #print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))

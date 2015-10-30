@@ -201,11 +201,14 @@ def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
     delta_time=delivery_time-time
     dist=np.multiply(delta_time,dataM[:,5]-time)
     distance=np.subtract(dist,IN)
-    distance=np.maximum(np.zeros(dataM.shape[0])+0.01,distance)
 
     print('xxxxxxxxxxx')
     print(distance)
     print('xxxxxxxxxxx')
+
+    distance=np.maximum(np.ones(dataM.shape[0]),distance)
+
+
     eta=1/distance
     etaPow=np.power(eta,beta)
     tosum=np.multiply(pheromones[pos],etaPow)
