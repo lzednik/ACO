@@ -32,30 +32,32 @@ class Solution:
 
 #class Ant defines Ant object
 class Ant:
-    def __init__(self,id,bestSolution):
+    def __init__(self,id,nfbestSolution):
         self.id=id
         self.vehicles=[]
         self.time=0
-        self.solution=bestSolution
-
+        self.solution=nfbestSolution
+        self.solution.vehicle_count-=1
+        self.solution.tour_length=0
+        self.solution.visited=[]
+        self.solution.visited.append(0)
         for v in range(self.solution.vehicle_count):
             self.vehicles.append(Vehicle(v))
 
 
     #each Ant needs to be able to calculate routes for each vehicle
-    def calculate(self,distM,dataM,pheromones,bestSolution,IN,beta):
+    def calculate(self,distM,dataM,pheromones,IN,beta):
         #reset
         for veh in self.vehicles:
             veh.pos=0
             veh.tour=[]
             veh.doneTime=0
-        self.solution.tour_length=0
-        self.solution.visited=[]
-        self.time=0
-
+        #sorted due time
+        sortedDueTimeRefs=np.argsort(dataM[:,5])
         #perform calculation
         calcDone=False
         minTime=1000000
+        tour_length=0
         while calcDone==False:
             for veh in self.vehicles:
                 if veh.doneTime<=self.time:
@@ -71,10 +73,24 @@ class Ant:
                         veh.tour.append(nextPos)
                         self.solution.visited.append(nextPos)
                         self.solution.tour_length+=1
+                        IN[nextPos]+=1
                     #else:
                     #    print('Exploitation')
-            if self.solution.tour_length>5:
+            #print('orig tour len: ' +str(tour_length))
+            #print('new tour len: ' +str(self.solution.tour_length))
+            print('self solution visited is:' +str(self.solution.visited))
+            if tour_length==self.solution.tour_length:
                 calcDone=True
+                #insert procedure
+                print('****************')
+                print('Insert Procedure')
+                for loc in sortedDueTimeRefs:
+                    print('for loc %s the due time is %s' % (loc,dataM[loc][5])) #due time
+                print('****************')
+
+            else:
+                tour_length=self.solution.tour_length
+        return self.solution
         # #initially each vehicle is assigned a node
         # for veh in self.vehicles:
         #     nextNode=pickNext(veh.pos,distM,dataM,pheromones,self.visited,self.time)
@@ -202,9 +218,9 @@ def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
     dist=np.multiply(delta_time,dataM[:,5]-time)
     distance=np.subtract(dist,IN)
 
-    print('xxxxxxxxxxx')
-    print(distance)
-    print('xxxxxxxxxxx')
+    # print('xxxxxxxxxxx')
+    # print(distance)
+    # print('xxxxxxxxxxx')
 
     distance=np.maximum(np.ones(dataM.shape[0]),distance)
 
@@ -217,8 +233,8 @@ def Exploration(pos,distM,dataM,pheromones,IN,visited,time,beta):
 
     probmin=1/np.min(probs)
     probs2=np.round(np.multiply(probs,probmin),0).astype(int)
-    print('selection probabilities:')
-    print(probs2)
+    # print('selection probabilities:')
+    # print(probs2)
     np.savetxt('t1.txt', probs2, delimiter=',')
     probs3=[]
     for pos in range(probs2.shape[0]):

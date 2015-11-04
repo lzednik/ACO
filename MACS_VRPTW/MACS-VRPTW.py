@@ -4,6 +4,9 @@ from MACSdefs import *
 from solviaNN import *
 import numpy as np
 import math
+import time
+
+start_time=time.time()
 
 dataM=np.loadtxt('solomon_r101.txt', skiprows=1)
 
@@ -17,8 +20,12 @@ IN=np.zeros(dataM.shape[0])
 
 nnSolution=nnAlgorithm(dataM,distM)
 bestSolution=nnSolution
+nfbestSolution=nnSolution
+
 print('Results of NN Algorithm')
 bestSolution.print()
+print('End of results of NN Algorithm')
+print('')
 
 beta=2
 pheromones=pheromone(distM.shape,nnSolution.tour_length)
@@ -30,11 +37,20 @@ pheromones=pheromone(distM.shape,nnSolution.tour_length)
 
 ant=Ant(1,bestSolution)
 
-visited=[]
-time=0
 #ant.calculate(distM,dataM,pheromones,bestSolution,IN,beta)
-visited.append(0)
-print(Exploration(3,distM,dataM,pheromones,IN,visited,time,beta))
+
+newSolution=ant.calculate(distM,dataM,pheromones,IN,beta)
+
+if len(newSolution.visited)>5:
+    print('woohoo')
+
+
+print('')
+print("Execution time was %s seconds." % round((time.time() - start_time),4))
+print('')
+
+#print(Exploration(1,distM,dataM,pheromones,IN,visited,time,beta))
+
 
 #print(dataM[:,0])
 #print(Exploration(0,distM,dataM,choiceInfo,IN,visited,time))

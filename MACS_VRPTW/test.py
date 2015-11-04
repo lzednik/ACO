@@ -1,8 +1,10 @@
 import numpy as np
 
-a=np.arange(5,10)
-b=np.arange(1)
+dataM=np.loadtxt('solomon_r101.txt', skiprows=1)
+dueTimes=dataM[:,5]
 
-c=a[b]
+a=np.argsort(dueTimes)
+print(dueTimes)
+print('*************')
+print(a)
 
-print(c)
